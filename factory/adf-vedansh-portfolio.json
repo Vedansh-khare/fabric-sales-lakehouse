@@ -1,0 +1,15 @@
+{
+	"name": "adf-vedansh-portfolio",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "1a3c3175-7551-4fb4-b2a7-b45db05457b9",
+		"tenantId": "6bc1eb59-e5ed-4410-8176-a4739a1cada5"
+	}
+}
