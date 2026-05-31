@@ -38,7 +38,7 @@
 				"     ignoreNoFilesFound: false) ~> sourceSales",
 				"sourceSales select(skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RenameColumns",
-				"RenameColumns filter(!isNull(SalesOrderID)) ~> filterNulls",
+				"RenameColumns filter(true()) ~> filterNulls",
 				"filterNulls derive(ingestion_date =  currentDate(),",
 				"          source_system = 'ADF') ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
