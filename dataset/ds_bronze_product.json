@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText8",
+	"name": "ds_bronze_product",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_storage",

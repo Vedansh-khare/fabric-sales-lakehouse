@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText5",
+	"name": "ds_bronze_salesorderdetail",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_storage",

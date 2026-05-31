@@ -49,13 +49,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedText1",
+						"referenceName": "ds_bronze_customer",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedText2",
+						"referenceName": "ds_silver_customer",
 						"type": "DatasetReference"
 					}
 				]
@@ -114,13 +114,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedText3",
+						"referenceName": "ds_bronze_salesorderheader",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedText6",
+						"referenceName": "ds_silver_salesorderheader",
 						"type": "DatasetReference"
 					}
 				]
@@ -179,13 +179,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedText5",
+						"referenceName": "ds_bronze_salesorderdetail",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedText7",
+						"referenceName": "ds_silver_salesorderdetail",
 						"type": "DatasetReference"
 					}
 				]
@@ -244,13 +244,13 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DelimitedText8",
+						"referenceName": "ds_bronze_product",
 						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "DelimitedText9",
+						"referenceName": "ds_silver_product",
 						"type": "DatasetReference"
 					}
 				]

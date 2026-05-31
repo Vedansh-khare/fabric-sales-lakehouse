@@ -1,5 +1,5 @@
 {
-	"name": "DelimitedText9",
+	"name": "ds_silver_product",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "ls_adls_storage",
