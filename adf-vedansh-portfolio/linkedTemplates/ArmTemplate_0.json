@@ -38,7 +38,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"name": "[concat(parameters('factoryName'), '/ds_bronze_customer')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -71,7 +71,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"name": "[concat(parameters('factoryName'), '/ds_silver_customer')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -99,7 +99,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
+			"name": "[concat(parameters('factoryName'), '/ds_bronze_salesorderheader')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -132,7 +132,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText5')]",
+			"name": "[concat(parameters('factoryName'), '/ds_bronze_salesorderdetail')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -165,7 +165,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText6')]",
+			"name": "[concat(parameters('factoryName'), '/ds_silver_salesorderheader')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -193,7 +193,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText7')]",
+			"name": "[concat(parameters('factoryName'), '/ds_silver_salesorderdetail')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -221,7 +221,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText8')]",
+			"name": "[concat(parameters('factoryName'), '/ds_bronze_product')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -254,7 +254,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText9')]",
+			"name": "[concat(parameters('factoryName'), '/ds_silver_product')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -269,6 +269,34 @@
 						"type": "AzureBlobFSLocation",
 						"fileName": "Product_clean.csv",
 						"fileSystem": "silver"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_adls_storage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_gold_salesorders')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ls_adls_storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "sales_orders_gold.csv",
+						"fileSystem": "gold"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -334,14 +362,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "DelimitedText1",
+								"referenceName": "ds_bronze_customer",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DelimitedText2",
+								"referenceName": "ds_silver_customer",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -401,14 +429,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "DelimitedText3",
+								"referenceName": "ds_bronze_salesorderheader",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DelimitedText6",
+								"referenceName": "ds_silver_salesorderheader",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -468,14 +496,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "DelimitedText5",
+								"referenceName": "ds_bronze_salesorderdetail",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DelimitedText7",
+								"referenceName": "ds_silver_salesorderdetail",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -535,14 +563,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "DelimitedText8",
+								"referenceName": "ds_bronze_product",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DelimitedText9",
+								"referenceName": "ds_silver_product",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -555,14 +583,74 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText3')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText6')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText5')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText7')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText8')]",
-				"[concat(variables('factoryId'), '/datasets/DelimitedText9')]"
+				"[concat(variables('factoryId'), '/datasets/ds_bronze_customer')]",
+				"[concat(variables('factoryId'), '/datasets/ds_silver_customer')]",
+				"[concat(variables('factoryId'), '/datasets/ds_bronze_salesorderheader')]",
+				"[concat(variables('factoryId'), '/datasets/ds_silver_salesorderheader')]",
+				"[concat(variables('factoryId'), '/datasets/ds_bronze_salesorderdetail')]",
+				"[concat(variables('factoryId'), '/datasets/ds_silver_salesorderdetail')]",
+				"[concat(variables('factoryId'), '/datasets/ds_bronze_product')]",
+				"[concat(variables('factoryId'), '/datasets/ds_silver_product')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_transform')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_silver_salesorderheader",
+								"type": "DatasetReference"
+							},
+							"name": "sourceSales"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_gold_salesorders",
+								"type": "DatasetReference"
+							},
+							"name": "sinkGold"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RenameColumns"
+						},
+						{
+							"name": "filterNulls"
+						},
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceSales",
+						"sourceSales select(skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns",
+						"RenameColumns filter(true()) ~> filterNulls",
+						"filterNulls derive(ingestion_date =  currentDate(),",
+						"          source_system = 'ADF') ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sinkGold"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_silver_salesorderheader')]",
+				"[concat(variables('factoryId'), '/datasets/ds_gold_salesorders')]"
 			]
 		}
 	]
