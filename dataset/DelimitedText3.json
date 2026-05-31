@@ -1,0 +1,28 @@
+{
+	"name": "DelimitedText3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "SalesOrderHeader.csv",
+				"fileSystem": "bronze"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "43659\t10\t2022-05-30 00:00:00.000\t2022-06-11 00:00:00.000\t2022-06-06 00:00:00.000\t5\t0\tSO43659\tPO522145787\t10-4020-000676\t29825\t279\t5\t985\t985\t5\t16281\t105041Vi84182\t\t20565.6206\t1971.5149\t616.0984\t23153.2339\t\t79B65321-39CA-4115-9CBA-8FE0903E12E6\t2022-06-06 00:00:00.000",
+				"type": "String"
+			}
+		]
+	}
+}

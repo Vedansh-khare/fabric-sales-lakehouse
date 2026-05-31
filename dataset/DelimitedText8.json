@@ -1,0 +1,28 @@
+{
+	"name": "DelimitedText8",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adls_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Product.csv",
+				"fileSystem": "bronze"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "1\tAdjustable Race\tAR-5381\t0\t0\t\t1000\t750\t.0000\t.0000\t\t\t\t\t0\t\t\t\t\t\t2019-04-30 00:00:00.000\t\t\t694215B7-08F7-4C0D-ACB1-D734BA44C0C8\t2025-02-07 10:01:36.827",
+				"type": "String"
+			}
+		]
+	}
+}
