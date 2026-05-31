@@ -30,5 +30,9 @@ AdventureWorks Sales — Microsoft sample database
 
 ![Pipeline Success](docs/pipeline-success.png)
 
+## Architecture
+
+![Architecture](docs/architecture.png)
+
 ## 👤 Author
 Vedansh Khare | Informatica ETL → Azure Data Engineer
