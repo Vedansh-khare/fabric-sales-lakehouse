@@ -286,6 +286,43 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "silverTransform",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy Product",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_silver_transform",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceSales": {},
+									"sinkGold": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -301,7 +338,8 @@
 				"[concat(variables('factoryId'), '/datasets/ds_bronze_salesorderdetail')]",
 				"[concat(variables('factoryId'), '/datasets/ds_silver_salesorderdetail')]",
 				"[concat(variables('factoryId'), '/datasets/ds_bronze_product')]",
-				"[concat(variables('factoryId'), '/datasets/ds_silver_product')]"
+				"[concat(variables('factoryId'), '/datasets/ds_silver_product')]",
+				"[concat(variables('factoryId'), '/dataflows/df_silver_transform')]"
 			]
 		},
 		{

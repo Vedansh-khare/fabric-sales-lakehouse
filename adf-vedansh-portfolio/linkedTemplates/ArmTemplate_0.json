@@ -310,6 +310,66 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/df_silver_transform')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_silver_salesorderheader",
+								"type": "DatasetReference"
+							},
+							"name": "sourceSales"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_gold_salesorders",
+								"type": "DatasetReference"
+							},
+							"name": "sinkGold"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RenameColumns"
+						},
+						{
+							"name": "filterNulls"
+						},
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> sourceSales",
+						"sourceSales select(skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns",
+						"RenameColumns filter(true()) ~> filterNulls",
+						"filterNulls derive(ingestion_date =  currentDate(),",
+						"          source_system = 'ADF') ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sinkGold"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_silver_salesorderheader')]",
+				"[concat(variables('factoryId'), '/datasets/ds_gold_salesorders')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pl_bronze_ingest')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -575,6 +635,43 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "silverTransform",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy Product",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "df_silver_transform",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"sourceSales": {},
+									"sinkGold": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -590,67 +687,8 @@
 				"[concat(variables('factoryId'), '/datasets/ds_bronze_salesorderdetail')]",
 				"[concat(variables('factoryId'), '/datasets/ds_silver_salesorderdetail')]",
 				"[concat(variables('factoryId'), '/datasets/ds_bronze_product')]",
-				"[concat(variables('factoryId'), '/datasets/ds_silver_product')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/df_silver_transform')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_silver_salesorderheader",
-								"type": "DatasetReference"
-							},
-							"name": "sourceSales"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_gold_salesorders",
-								"type": "DatasetReference"
-							},
-							"name": "sinkGold"
-						}
-					],
-					"transformations": [
-						{
-							"name": "RenameColumns"
-						},
-						{
-							"name": "filterNulls"
-						},
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"source(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> sourceSales",
-						"sourceSales select(skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns",
-						"RenameColumns filter(true()) ~> filterNulls",
-						"filterNulls derive(ingestion_date =  currentDate(),",
-						"          source_system = 'ADF') ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sinkGold"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_silver_salesorderheader')]",
-				"[concat(variables('factoryId'), '/datasets/ds_gold_salesorders')]"
+				"[concat(variables('factoryId'), '/datasets/ds_silver_product')]",
+				"[concat(variables('factoryId'), '/dataflows/df_silver_transform')]"
 			]
 		}
 	]
