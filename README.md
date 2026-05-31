@@ -26,5 +26,9 @@ AdventureWorks Sales — Microsoft sample database
 | Workflow | Pipeline |
 | Source/Target | Linked Service + Dataset |
 
+## Pipeline Run — All Green ✅
+
+![Pipeline Success](docs/pipeline-success.png)
+
 ## 👤 Author
 Vedansh Khare | Informatica ETL → Azure Data Engineer
