@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+venv/
+*.egg-info/
+
+# Azure / ADF
+*.publishsettings
+.azure/
+local.settings.json
+appsettings.json
+
+# Credentials / secrets
+*.pfx
+*.pem
+*.key
+serviceAccountKey.json
+credentials.json
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Terraform (future use)
+*.tfstate
+*.tfstate.backup
+.terraform/
