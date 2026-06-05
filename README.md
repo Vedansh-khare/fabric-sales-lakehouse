@@ -3,7 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Git](https://img.shields.io/badge/Git%20CI%2FCD-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
-# fabric-sales-lakehouse
+# adf-medallion-pipeline
 
 # 🏭 Sales Analytics Lakehouse | ADF + Azure Portfolio
 
